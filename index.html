@@ -27,14 +27,14 @@
           <h1>Soil Monitoring Dashboard</h1>
           <p>Monitor soil conditions and irrigation system activity.</p>
         </div>
-        <span class="status"><span class="status-dot"></span> Demo Mode</span>
+        <span class="status" id="connection-badge"><span class="status-dot"></span> Connecting to Firebase…</span>
       </header>
 
       <section class="dashboard-summary" aria-live="polite">
         <div>
           <span class="summary-label">System overview</span>
-          <h2 id="system-status">Demo monitoring</h2>
-          <p id="last-updated">Waiting for demo readings…</p>
+          <h2 id="system-status">Waiting for device data</h2>
+          <p id="last-updated">Waiting for verified sensor readings from Firebase…</p>
         </div>
         <div class="summary-indicator">
   
@@ -129,7 +129,7 @@
         <div class="section-heading">
           <div>
             <h2>Recent Trends</h2>
-            <p>Recent simulated readings</p>
+            <p>Recent verified readings from Firebase</p>
           </div>
         </div>
 
@@ -158,7 +158,7 @@
         <div class="section-heading">
           <div>
             <h2>Pump Status</h2>
-            <p>Current simulated pump states</p>
+            <p>Live pump status; controls locked until hardware verification</p>
           </div>
           <button class="secondary-button" data-goto="pumps" type="button">
             Manage Pumps
@@ -405,12 +405,8 @@
 
     <div class="settings-grid">
       <div class="setting-item">
-        <label for="esp32-ip">ESP32 IP Address</label>
-        <input
-          type="text"
-          id="esp32-ip"
-          value="192.168.1.187"
-        />
+        <label>Device connection</label>
+        <p class="setting-value" id="device-connection-state">Waiting for ESP32 Firebase status…</p>
       </div>
 
       <div class="setting-item">
@@ -423,7 +419,7 @@
 
       <div class="setting-item">
         <label>Communication</label>
-        <p class="setting-value">Wi-Fi / HTTP</p>
+        <p class="setting-value">Wi-Fi / Firebase Realtime Database</p>
       </div>
     </div>
 
@@ -589,6 +585,11 @@
 </section>
   </main>
 
+  <!-- Firebase compat SDKs; public web configuration is not a database authorization mechanism. -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
   <script src="script.js"></script>
+  <script src="firebase-integration.js"></script>
 </body>
 </html>

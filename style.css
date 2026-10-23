@@ -999,3 +999,9 @@ header p {
     grid-template-columns: 1fr;
   }
 }
+/* Firebase integration status and safety lock */
+#firebase-auth-form, #firebase-login-form { margin-top: 12px; }
+#firebase-auth-status { overflow-wrap: anywhere; }
+.pump-button:disabled { opacity: .65; cursor: not-allowed; background: #8b938c; }
+.sensor-status.unavailable { background: #eef0ee; color: #626b64; }
+#connection-badge { display: inline-flex; align-items: center; gap: 8px; }

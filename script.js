@@ -136,6 +136,8 @@ function renderTrend(type) {
 }
 
 function updateReadings() {
+    // Firebase integration owns live readings; never generate fake values in live mode.
+    if (window.AGRISEN_LIVE_MODE) return;
     const moisture = Math.floor(35 + Math.random() * 55);
     const temperature = Number((24 + Math.random() * 12).toFixed(1));
     const ph = Number((5 + Math.random() * 3).toFixed(1));
@@ -284,10 +286,10 @@ function createPumpRow(pump, index) {
         String(pumpStates[index])
     );
 
-    button.addEventListener("click", () => {
-        pumpStates[index] = !pumpStates[index];
-        renderPumps();
-    });
+    button.disabled = true;
+    button.title = "Pump control is disabled until sensor and relay safety checks are completed.";
+    button.textContent = "DISABLED";
+    stateLabel.textContent = "Safety lock";
 
     stateContainer.append(stateLabel, button);
     row.append(name, stateContainer);
