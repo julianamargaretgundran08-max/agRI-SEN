@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#244b35">
+  <title>AgRI-SEN | Soil Monitoring</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <h2 class="logo">🌱 AgRI-SEN</h2>
+    <nav aria-label="Main navigation">
+      <a href="#dashboard" class="nav-link active" data-page="dashboard">Dashboard</a>
+      <a href="#plants" class="nav-link" data-page="plants">Plant Profiles</a>
+      <a href="#pumps" class="nav-link" data-page="pumps">Pump Control</a>
+      <a href="#history" class="nav-link" data-page="history">History</a>
+      <a href="#settings" class="nav-link" data-page="settings">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page">
+      <header>
+        <div>
+          <h1>Soil Monitoring Dashboard</h1>
+          <p>Monitor soil conditions and irrigation system activity.</p>
+        </div>
+        <span class="status"><span class="status-dot"></span> Demo Mode</span>
+      </header>
+
+      <section class="dashboard-summary" aria-live="polite">
+        <div>
+          <span class="summary-label">System overview</span>
+          <h2 id="system-status">Demo monitoring</h2>
+          <p id="last-updated">Waiting for demo readings…</p>
+        </div>
+        <div class="summary-indicator">
+  
+        </div>
+      </section>
+
+      <section class="overview dashboard-overview" aria-label="Soil readings">
+        <article class="card sensor-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">💧</span>
+            <span id="moisture-status" class="sensor-status">Demo</span>
+          </div>
+          <h3>Soil Moisture</h3>
+          <p id="moisture">--</p>
+          <div class="sensor-meter">
+            <div id="moisture-meter" class="sensor-meter-fill"></div>
+          </div>
+          <small>Percent (%)</small>
+        </article>
+
+        <article class="card sensor-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">🌡️</span>
+            <span id="temperature-status" class="sensor-status">Demo</span>
+          </div>
+          <h3>Temperature</h3>
+          <p id="temperature">--</p>
+          <div class="sensor-meter">
+            <div id="temperature-meter" class="sensor-meter-fill"></div>
+          </div>
+          <small>Degrees Celsius (°C)</small>
+        </article>
+
+        <article class="card sensor-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">⚗️</span>
+            <span id="ph-status" class="sensor-status">Demo</span>
+          </div>
+          <h3>Soil pH</h3>
+          <p id="ph">--</p>
+          <div class="sensor-meter">
+            <div id="ph-meter" class="sensor-meter-fill"></div>
+          </div>
+          <small>pH scale</small>
+        </article>
+
+        <article class="card sensor-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">〰️</span>
+            <span id="ec-status" class="sensor-status">Demo</span>
+          </div>
+          <h3>Electrical Conductivity</h3>
+          <p id="ec">--</p>
+          <div class="sensor-meter">
+            <div id="ec-meter" class="sensor-meter-fill"></div>
+          </div>
+          <small>µS/m (unit to confirm with sensor)</small>
+        </article>
+
+        <article class="card sensor-card npk-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">N</span>
+            <span class="sensor-status unavailable">Not connected</span>
+          </div>
+          <h3>Nitrogen</h3>
+          <p id="nitrogen">--</p>
+          <small>mg/kg · Awaiting sensor data</small>
+        </article>
+
+        <article class="card sensor-card npk-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">P</span>
+            <span class="sensor-status unavailable">Not connected</span>
+          </div>
+          <h3>Phosphorus</h3>
+          <p id="phosphorus">--</p>
+          <small>mg/kg · Awaiting sensor data</small>
+        </article>
+
+        <article class="card sensor-card npk-card">
+          <div class="sensor-card-top">
+            <span class="sensor-icon">K</span>
+            <span class="sensor-status unavailable">Not connected</span>
+          </div>
+          <h3>Potassium</h3>
+          <p id="potassium">--</p>
+          <small>mg/kg · Awaiting sensor data</small>
+        </article>
+      </section>
+
+      <section class="panel trend-panel">
+        <div class="section-heading">
+          <div>
+            <h2>Recent Trends</h2>
+            <p>Recent simulated readings</p>
+          </div>
+        </div>
+
+        <div class="trend-grid">
+          <div class="trend-item">
+            <div class="trend-heading">
+              <span>Soil Moisture</span>
+              <strong id="trend-moisture-value">--</strong>
+            </div>
+            <div id="trend-moisture" class="trend-bars"
+                 aria-label="Recent moisture trend"></div>
+          </div>
+
+          <div class="trend-item">
+            <div class="trend-heading">
+              <span>Temperature</span>
+              <strong id="trend-temperature-value">--</strong>
+            </div>
+            <div id="trend-temperature" class="trend-bars"
+                 aria-label="Recent temperature trend"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel dashboard-pumps">
+        <div class="section-heading">
+          <div>
+            <h2>Pump Status</h2>
+            <p>Current simulated pump states</p>
+          </div>
+          <button class="secondary-button" data-goto="pumps" type="button">
+            Manage Pumps
+          </button>
+        </div>
+        <div id="dashboard-pump-list"></div>
+      </section>
+
+    </section>
+    <!-- AUTOMATIC RECOMMENDATIONS -->
+<div class="recommendation-card">
+    <h2>System Recommendations</h2>
+    <p id="recommendation-summary">
+        Waiting for sensor readings...
+    </p>
+    <ul id="recommendation-list">
+        <li>Monitoring plant conditions...</li>
+    </ul>
+    <small>
+        Recommendations are advisory. Pumps require manual control.
+    </small>
+</div>
+
+    <!-- PLANT PROFILES -->
+    <section id="plants" class="page hidden">
+      <header>
+        <div>
+          <h1>Plant Profiles</h1>
+          <p>Configure growing requirements for different plants.</p>
+        </div>
+      </header>
+
+      <div class="plant-layout">
+        <section class="panel">
+          <h2>Saved Plants</h2>
+          <input type="search" id="plant-search" class="plant-search"
+                 placeholder="Search plant profiles..."
+                 aria-label="Search plant profiles">
+          <div id="plant-list"></div>
+          <button id="add-plant" class="primary-button" type="button">
+            + Add Plant
+          </button>
+        </section>
+
+        <section class="panel">
+          <h2 id="form-title">Add Plant Profile</h2>
+          <form id="plant-form">
+            <label for="plant-name">Plant Name</label>
+            <input id="plant-name" type="text" placeholder="e.g. Tomato"
+                   required maxlength="60">
+
+            <label for="plant-image">Plant Picture</label>
+            <input type="file" id="plant-image" accept="image/*">
+
+            <div class="image-preview-container">
+              <img id="plant-image-preview" src=""
+                   alt="Plant image preview"
+                   class="plant-image-preview hidden">
+              <div id="image-placeholder" class="image-placeholder">
+                🌱
+                <span>No image selected</span>
+              </div>
+            </div>
+
+            <p class="upload-hint">
+              Images are resized before saving. Maximum original file size: 8 MB.
+            </p>
+
+            <label for="plant-moisture">Target Soil Moisture (%)</label>
+            <input id="plant-moisture" type="number"
+                   min="0" max="100" value="60" required>
+
+            <div class="range-fields">
+              <div>
+                <label for="ph-min">Minimum pH</label>
+                <input id="ph-min" type="number" min="0" max="14"
+                       step="0.1" value="5.5" required>
+              </div>
+              <div>
+                <label for="ph-max">Maximum pH</label>
+                <input id="ph-max" type="number" min="0" max="14"
+                       step="0.1" value="7" required>
+              </div>
+            </div>
+
+            <div class="range-fields">
+              <div>
+                <label for="ec-min">Minimum EC (mS/cm)</label>
+                <input id="ec-min" type="number" min="0"
+                       step="0.1" value="0.5" required>
+              </div>
+              <div>
+                <label for="ec-max">Maximum EC (mS/cm)</label>
+                <input id="ec-max" type="number" min="0"
+                       step="0.1" value="2" required>
+              </div>
+            </div>
+
+            <label for="plant-notes">Notes (optional)</label>
+            <textarea id="plant-notes"
+                      placeholder="Additional growing requirements"
+                      maxlength="500"></textarea>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-button">
+                Save Profile
+              </button>
+              <button type="button" id="cancel-edit"
+                      class="secondary-button">
+                Clear
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <section class="panel selected-panel">
+        <h2>Selected Plant Requirements</h2>
+        <div id="selected-details">
+          <p>Select a plant profile to view its requirements.</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- PUMP CONTROL -->
+    <section id="pumps" class="page hidden">
+  <header>
+    <div>
+      <h1>Pump Control</h1>
+      <p>
+        Automatically manages the required amount of water and NPK based on
+        soil conditions, with manual ON/OFF control.
+      </p>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="section-heading">
+      <h2>Manual Pump Controls</h2>
+    </div>
+
+    <div id="pump-list"></div>
+  </section>
+</section>
+
+    <!-- HISTORY -->
+    <section id="history" class="page hidden">
+  <header>
+    <div>
+      <h1>History</h1>
+      <p>View recorded soil readings and irrigation activities.</p>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="section-heading">
+      <h2>Recent Records</h2>
+    </div>
+
+    <div class="history-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Moisture</th>
+            <th>Temperature</th>
+            <th>pH</th>
+            <th>EC</th>
+            <th>N</th>
+            <th>P</th>
+            <th>K</th>
+            <th>Water</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Oct 9, 2026 · 08:30 AM</td>
+            <td>42%</td>
+            <td>27.4°C</td>
+            <td>6.5</td>
+            <td>1.1 dS/m</td>
+            <td>58 mg/kg</td>
+            <td>175 mg/kg</td>
+            <td>182 mg/kg</td>
+            <td>0.8 L</td>
+          </tr>
+
+          <tr>
+            <td>Oct 9, 2026 · 09:00 AM</td>
+            <td>46%</td>
+            <td>27.8°C</td>
+            <td>6.6</td>
+            <td>1.2 dS/m</td>
+            <td>61 mg/kg</td>
+            <td>181 mg/kg</td>
+            <td>185 mg/kg</td>
+            <td>0.5 L</td>
+          </tr>
+
+          <tr>
+            <td>Oct 9, 2026 · 09:30 AM</td>
+            <td>51%</td>
+            <td>28.1°C</td>
+            <td>6.6</td>
+            <td>1.2 dS/m</td>
+            <td>63 mg/kg</td>
+            <td>183 mg/kg</td>
+            <td>188 mg/kg</td>
+            <td>0.3 L</td>
+          </tr>
+
+          <tr>
+            <td>Oct 9, 2026 · 10:00 AM</td>
+            <td>55%</td>
+            <td>28.3°C</td>
+            <td>6.7</td>
+            <td>1.3 dS/m</td>
+            <td>65 mg/kg</td>
+            <td>185 mg/kg</td>
+            <td>190 mg/kg</td>
+            <td>0 L</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="page hidden">
+  <header>
+    <div>
+      <h1>Settings</h1>
+      <p>Configure connectivity, automation, soil thresholds, and system parameters.</p>
+    </div>
+  </header>
+
+  <!-- CONNECTIVITY -->
+  <section class="panel">
+    <div class="section-heading">
+      <h2>Connectivity</h2>
+    </div>
+
+    <div class="settings-grid">
+      <div class="setting-item">
+        <label for="esp32-ip">ESP32 IP Address</label>
+        <input
+          type="text"
+          id="esp32-ip"
+          value="192.168.1.187"
+        />
+      </div>
+
+      <div class="setting-item">
+        <label>Connection Status</label>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span>Connected</span>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label>Communication</label>
+        <p class="setting-value">Wi-Fi / HTTP</p>
+      </div>
+    </div>
+
+    <button class="primary-btn" id="test-connection">
+      Test Connection
+    </button>
+  </section>
+
+
+  <!-- AUTOMATION -->
+  <section class="panel">
+    <div class="section-heading">
+      <h2>Automation</h2>
+    </div>
+
+    <div class="settings-grid">
+      <div class="setting-item">
+        <label for="auto-irrigation">Automatic Irrigation</label>
+        <label class="switch">
+          <input type="checkbox" id="auto-irrigation" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <label for="auto-npk">Automatic NPK Dosing</label>
+        <label class="switch">
+          <input type="checkbox" id="auto-npk" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <label for="auto-calculation">Automatic Amount Calculation</label>
+        <label class="switch">
+          <input type="checkbox" id="auto-calculation" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <label for="manual-override">Manual Pump Override</label>
+        <label class="switch">
+          <input type="checkbox" id="manual-override" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <p class="setting-description">
+      The system automatically determines the required amount of water and
+      NPK based on the soil readings and configured target thresholds.
+      Manual control is limited to turning the pumps ON or OFF.
+    </p>
+  </section>
+
+
+  <!-- THRESHOLDS -->
+  <section class="panel">
+    <div class="section-heading">
+      <h2>Soil Thresholds</h2>
+    </div>
+
+    <div class="settings-grid">
+
+      <div class="setting-item">
+        <label for="moisture-min">Moisture Minimum (%)</label>
+        <input type="number" id="moisture-min" value="20" />
+      </div>
+
+      <div class="setting-item">
+        <label for="moisture-max">Moisture Maximum (%)</label>
+        <input type="number" id="moisture-max" value="60" />
+      </div>
+
+      <div class="setting-item">
+        <label for="ph-min">pH Minimum</label>
+        <input type="number" id="ph-min" value="6.0" step="0.1" />
+      </div>
+
+      <div class="setting-item">
+        <label for="ph-max">pH Maximum</label>
+        <input type="number" id="ph-max" value="7.5" step="0.1" />
+      </div>
+
+      <div class="setting-item">
+        <label for="ec-min">EC Minimum (dS/m)</label>
+        <input type="number" id="ec-min" value="0.8" step="0.1" />
+      </div>
+
+      <div class="setting-item">
+        <label for="ec-max">EC Maximum (dS/m)</label>
+        <input type="number" id="ec-max" value="1.4" step="0.1" />
+      </div>
+
+      <div class="setting-item">
+        <label for="nitrogen-target">Nitrogen Target (mg/kg)</label>
+        <input type="number" id="nitrogen-target" value="60" />
+      </div>
+
+      <div class="setting-item">
+        <label for="phosphorus-target">Phosphorus Target (mg/kg)</label>
+        <input type="number" id="phosphorus-target" value="180" />
+      </div>
+
+      <div class="setting-item">
+        <label for="potassium-target">Potassium Target (mg/kg)</label>
+        <input type="number" id="potassium-target" value="180" />
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SYSTEM CONFIGURATION -->
+  <section class="panel">
+    <div class="section-heading">
+      <h2>System Configuration</h2>
+    </div>
+
+    <div class="settings-grid">
+
+      <div class="setting-item">
+        <label for="reading-interval">Sensor Reading Interval</label>
+        <select id="reading-interval">
+          <option value="1">1 second</option>
+          <option value="3" selected>3 seconds</option>
+          <option value="5">5 seconds</option>
+          <option value="10">10 seconds</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="history-logging">History Logging</label>
+        <select id="history-logging">
+          <option value="enabled" selected>Enabled</option>
+          <option value="disabled">Disabled</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="system-mode">System Mode</label>
+        <select id="system-mode">
+          <option value="automatic" selected>Automatic</option>
+          <option value="manual">Manual</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="units">Measurement Units</label>
+        <select id="units">
+          <option value="metric" selected>Metric</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="primary-btn" id="save-settings">
+      Save Settings
+    </button>
+  </section>
+
+</section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
