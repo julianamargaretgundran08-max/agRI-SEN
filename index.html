@@ -423,9 +423,23 @@
       </div>
     </div>
 
-    <button class="primary-btn" id="test-connection">
+    <button class="primary-btn" id="test-connection" type="button">
       Test Connection
     </button>
+
+    <div class="setting-item" style="margin-top: 1.25rem;">
+      <h3>Website Account Sign-in</h3>
+      <p id="firebase-auth-status" role="status" aria-live="polite">Not signed in</p>
+      <form id="firebase-login-form" autocomplete="on">
+        <label for="firebase-email">Email</label>
+        <input id="firebase-email" name="email" type="email" autocomplete="username" required>
+        <label for="firebase-password">Password</label>
+        <input id="firebase-password" name="password" type="password" autocomplete="current-password" required>
+        <button class="primary-btn" type="submit">Sign in</button>
+      </form>
+      <button class="secondary-button" id="firebase-logout" type="button" hidden>Sign out</button>
+      <small>Use the authorized website Firebase account. Do not use the ESP32 device account.</small>
+    </div>
   </section>
 
 
